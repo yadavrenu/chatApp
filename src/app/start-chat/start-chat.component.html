@@ -1,3 +1,22 @@
-<p>
-  start-chat works!
-</p>
+
+<div class="main">
+  <div class="left">
+    <input type="text" [(ngModel)]="channelName"><br />
+    <button (click)="create()">Create Channel</button>
+    <br /><br />
+    <button (click)="viewChannelList()">View Channels</button>
+    <div *ngFor="let channel of channels" [id]="channel"class="channelList">
+      {{channelList.channel.unique_name}}
+    </div>
+    <!-- <button (click)="delChannel()">Delete Channel</button> -->
+    <button (click)="joinChannel()">Join Channel</button>
+    
+  </div>
+  <div class="right">
+    <div class="bottom"> 
+      <input type="text" [(ngModel)]="messageBody" id="msg">
+      <button (click)="sendMessage()">send</button>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,33 @@
+.left{
+    width: 25%;
+    background-color:rgba(221, 119, 82, 0.555);
+    height: 670px;
+    position: absolute;
+}
+
+#msg{
+    border-radius: 5px;
+    width: 70%
+}
+
+.right{
+    width: 75%;
+    float: right;
+    background-color:rgba(245, 245, 245, 0.39);
+    height: 670px;
+    /* position: absolute; */
+
+}
+
+.main{
+    position: relative;
+}
+ .bottom{
+    margin-top: 620px;
+    margin-left:50px;
+ }
+
+ button{
+     width: 120px;
+     border-radius: 5px;
+ }

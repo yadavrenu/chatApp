@@ -1,5 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http'
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms'
 import {
   SocialLoginModule,
   AuthServiceConfig,
@@ -7,8 +10,9 @@ import {
 } from "angular-6-social-login";
 
 import { AppComponent } from './app.component';
-import {  Routes, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { StartChatComponent } from './start-chat/start-chat.component';
+import { LoginComponent } from './login/login.component';
 
 export function getAuthServiceConfigs() {
   let config = new AuthServiceConfig(
@@ -25,12 +29,21 @@ export function getAuthServiceConfigs() {
 @NgModule({
   declarations: [
     AppComponent,
-    StartChatComponent
+    StartChatComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     SocialLoginModule,
+    HttpModule,
+    HttpClientModule,
+    FormsModule,
     RouterModule.forRoot([
+      {
+        path:'',
+        component: LoginComponent
+
+      },
       {
         path:'startChat',
         component: StartChatComponent
