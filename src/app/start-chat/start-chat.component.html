@@ -1,6 +1,9 @@
 
 <div class="main">
   <div class="left">
+    <input type="text" [(ngModel)]="searchChannelName" placeholder="Search.."><br />
+    <button (click)="Search()">Search</button>
+
     <input type="text" [(ngModel)]="channelName"><br />
     <button (click)="create()">Create Channel</button>
     <br /><br />

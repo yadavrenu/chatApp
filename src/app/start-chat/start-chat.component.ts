@@ -14,7 +14,10 @@ export class StartChatComponent implements OnInit {
   channelDetails:any;
   channelName:string;
   messageBody:string;
-  channelList;
+  channelList:any=[];
+  searchChannelName:string;
+  channelFound:string;
+  
   constructor( private data: UserDataTransferService) { }
 
 
@@ -28,7 +31,23 @@ export class StartChatComponent implements OnInit {
     let sub=this.data.viewChannels();
     sub.subscribe(Data=>{this.channelList=Data;
        console.log(this.channelList)});
-    
+  }
+
+  Search(){
+    let sub=this.data.viewChannels();
+    sub.subscribe(Data=>{console.log(Data)
+                 for(let index=0;index<Data.channels.length;index++){
+                   this.channelList.push(Data.channels[index].unique_name)
+                 }
+                 for(let index=0;index<Data.channels.length;index++)
+                { if(this.channelList[index]==this.searchChannelName)
+                  {
+                    console.log("Channel Found");
+                    this.channelFound=this.searchChannelName;
+
+                  }
+
+                }});
   }
 
   joinChannel(){
@@ -41,6 +60,11 @@ export class StartChatComponent implements OnInit {
     sub.subscribe(Data=>console.log(Data),err=>{console.log(err)});
     this.messageBody="";
   }
+
+  // recieveMessage(){
+  //   let sub=this.data.recMess();
+  //   sub.subscribe(Data=>console.log(Data),err=>{console.log(err)});
+  // }
 
   // delChannel(){
   //   let sub=this.data.deleteChannel();

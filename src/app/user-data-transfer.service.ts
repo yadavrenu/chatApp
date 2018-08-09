@@ -36,7 +36,7 @@ export class UserDataTransferService {
   // }
 
   addMember(){
-    return this.http.post(this.url+this.SID+"/Channels/CHb1d8ada554914bc283497bfbc00f8a09/Members/","Identity=Renu",this.options);
+    return this.http.post(this.url+this.SID+"/Channels/CHd5c006a3efe341f3aa289c96e059d195/Members/","Identity=Renu",this.options);
   }
 
   sendMess(message){
@@ -44,6 +44,11 @@ export class UserDataTransferService {
     let new_url=this.url+this.SID+"/Channels/"+CSID+"/Messages/";
     return this.http.post(new_url,"&Body="+message,this.options);
   }
+
+  // recMess(){
+
+  // }
+
   setData(userData){
     this.data=userData;
   }
