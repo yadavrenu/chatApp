@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StartChatComponent implements OnInit {
 
-  identity:string='111584940250339239598';
+
 
   myData;
   channelDetails:any;
@@ -17,9 +17,13 @@ export class StartChatComponent implements OnInit {
   channelList:any=[];
   searchChannelName:string;
   channelFound:string;
+  searchList:any=[];
+  bool:boolean;
+  identity:string;
+  
   
   constructor( private data: UserDataTransferService) { }
-
+  
 
   create(){
     let sub=this.data.createChannel(this.channelName);
@@ -27,31 +31,51 @@ export class StartChatComponent implements OnInit {
                       
   }
 
+  // viewChannelList(){
+  //   let sub=this.data.viewChannels();
+  //   sub.subscribe(Data=>{this.channelList=Data;
+  //      console.log(this.channelList)});
+  // }
+
   viewChannelList(){
-    let sub=this.data.viewChannels();
-    sub.subscribe(Data=>{this.channelList=Data;
-       console.log(this.channelList)});
+    let sub=this.data.viewChannels();//array of all existing channels within the service
+    sub.subscribe(Data=>{
+      Data.channels.forEach(element => {
+
+        let channelData=this.data.allMembers(); //we only want the channels in which we are members
+        channelData.subscribe(data=>{
+          data.members.forEach(elem=>{
+            if(elem.identity==this.identity){
+              this.channelList.push(element.unique_name);
+              console.log("This is the list",this.channelList);
+            }
+          })
+        })
+        
+      });
+    });
   }
 
   Search(){
     let sub=this.data.viewChannels();
-    sub.subscribe(Data=>{console.log(Data)
+    sub.subscribe(Data=>{console.log(Data);
+      this.bool=false;
                  for(let index=0;index<Data.channels.length;index++){
-                   this.channelList.push(Data.channels[index].unique_name)
+                   this.searchList.push(Data.channels[index].unique_name)
                  }
                  for(let index=0;index<Data.channels.length;index++)
                 { if(this.channelList[index]==this.searchChannelName)
                   {
                     console.log("Channel Found");
                     this.channelFound=this.searchChannelName;
-
+                    this.bool=true;
                   }
 
                 }});
   }
 
   joinChannel(){
-    let sub=this.data.addMember();
+    let sub=this.data.addMember(this.myData.id,this.channelFound);
     sub.subscribe(Data=>console.log(Data),err=>{console.log(err)});
   }
 
@@ -73,7 +97,8 @@ export class StartChatComponent implements OnInit {
 
   ngOnInit() {
     this.myData=this.data.getData();
-    console.log(this.myData.name);  
+    console.log(this.myData.name,this.myData.id); 
+    this.identity=this.myData.id; 
   }
 
 }

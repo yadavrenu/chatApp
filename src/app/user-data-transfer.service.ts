@@ -35,14 +35,19 @@ export class UserDataTransferService {
   //   return this.http.delete(this.url+this.SID+"/Channels/id",this.options);
   // }
 
-  addMember(){
-    return this.http.post(this.url+this.SID+"/Channels/CHd5c006a3efe341f3aa289c96e059d195/Members/","Identity=Renu",this.options);
+  addMember(memberName,channelName){
+    return this.http.post(this.url+this.SID+"/Channels/"+channelName+"/Members/","Identity="+memberName,this.options);
   }
 
   sendMess(message){
     let CSID="CH320e11f132624bf7b6d79783e6ab90c8";
     let new_url=this.url+this.SID+"/Channels/"+CSID+"/Messages/";
     return this.http.post(new_url,"&Body="+message,this.options);
+  }
+
+  allMembers():Observable<any>{
+    let CSID="CH320e11f132624bf7b6d79783e6ab90c8";
+    return this.http.get(this.url+this.SID+"/Channels/"+CSID+"/Members",this.options);
   }
 
   // recMess(){

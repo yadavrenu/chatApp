@@ -1,22 +1,36 @@
-
 <div class="main">
   <div class="left">
-    <input type="text" [(ngModel)]="searchChannelName" placeholder="Search.."><br />
+    <input type="text" [(ngModel)]="searchChannelName" placeholder="Search.." id="Search">
+    <br />
     <button (click)="Search()">Search</button>
+    <br />
+    <br />
+    <div *ngIf="bool" class="searchResults">
+      {{channelFound}}
+      <button (click)="joinChannel()" class="joinButton">+</button>
+    </div>
+    <br />
 
-    <input type="text" [(ngModel)]="channelName"><br />
+    <input type="text" [(ngModel)]="channelName" id="cName" placeholder="New channel name">
+    <br />
     <button (click)="create()">Create Channel</button>
-    <br /><br />
+    <br />
+    <br />
     <button (click)="viewChannelList()">View Channels</button>
-    <div *ngFor="let channel of channels" [id]="channel"class="channelList">
-      {{channelList.channel.unique_name}}
+    <div class="channelList">
+      <ul *ngFor="let channel of channelList">
+        <li> #{{channel}} </li>
+      </ul>
     </div>
     <!-- <button (click)="delChannel()">Delete Channel</button> -->
-    <button (click)="joinChannel()">Join Channel</button>
-    
+    <!-- <button (click)="joinChannel()">Join Channel</button> -->
+
   </div>
   <div class="right">
-    <div class="bottom"> 
+    <div class="msgs">
+
+    </div>
+    <div class="bottom">
       <input type="text" [(ngModel)]="messageBody" id="msg">
       <button (click)="sendMessage()">send</button>
     </div>
