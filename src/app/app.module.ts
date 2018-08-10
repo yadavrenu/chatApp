@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http'
 import { NgModule } from '@angular/core';
+import { AuthGuard } from './auth.guard'
 import { FormsModule } from '@angular/forms'
 import {
   SocialLoginModule,
@@ -13,6 +14,7 @@ import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { StartChatComponent } from './start-chat/start-chat.component';
 import { LoginComponent } from './login/login.component';
+import { DoesnotexistComponent } from './doesnotexist/doesnotexist.component';
 
 export function getAuthServiceConfigs() {
   let config = new AuthServiceConfig(
@@ -30,7 +32,8 @@ export function getAuthServiceConfigs() {
   declarations: [
     AppComponent,
     StartChatComponent,
-    LoginComponent
+    LoginComponent,
+    DoesnotexistComponent
   ],
   imports: [
     BrowserModule,
@@ -42,16 +45,20 @@ export function getAuthServiceConfigs() {
       {
         path:'',
         component: LoginComponent
-
       },
       {
         path:'startChat',
-        component: StartChatComponent
+        component: StartChatComponent,
+        canActivate:[AuthGuard]
+      },
+      {
+        path: '**',
+        component: DoesnotexistComponent
       }
     ])
   ],
   providers: [{ provide: AuthServiceConfig,
-    useFactory: getAuthServiceConfigs}],
+    useFactory: getAuthServiceConfigs},AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

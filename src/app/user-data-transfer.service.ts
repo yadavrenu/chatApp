@@ -9,7 +9,7 @@ import {HttpClient } from '@angular/common/http';
 })
 export class UserDataTransferService {
 
-  data;
+  data=null;
   url="https://chat.twilio.com/v2/Services/";
   SID="IS58779b4f777a454e99bba4781cd7e6cb";
 
