@@ -39,23 +39,36 @@ export class UserDataTransferService {
     return this.http.post(this.url+this.SID+"/Channels/"+channelName+"/Members/","Identity="+memberName,this.options);
   }
 
-  sendMess(message){
-    let CSID="CH320e11f132624bf7b6d79783e6ab90c8";
-    let new_url=this.url+this.SID+"/Channels/"+CSID+"/Messages/";
-    return this.http.post(new_url,"&Body="+message,this.options);
+  allChannels(userName):Observable<any>{
+
+    return this.http.get(this.url+this.SID+"/Users/"+userName+"/Channels",this.options)
   }
 
-  allMembers():Observable<any>{
-    let CSID="CH320e11f132624bf7b6d79783e6ab90c8";
+  sendMess(message,name){
+    let CSID="CH73e740a984cb4b809b896c998be80b59";
+    let new_url=this.url+this.SID+"/Channels/"+CSID+"/Messages/";
+    return this.http.post(new_url,"&Body="+message+"&From="+name,this.options);
+  }
+
+  allMembers(CSID):Observable<any>{
+    // let CSID="CH73e740a984cb4b809b896c998be80b59";
     return this.http.get(this.url+this.SID+"/Channels/"+CSID+"/Members",this.options);
   }
 
-  // recMess(){
+  newUser(Identity){
+    return this.http.post(this.url+this.SID+"/Users","Identity="+Identity,this.options);
+  }
 
-  // }
+  recMess(channel):Observable<any>{
+    return this.http.get(this.url+this.SID+"/Channels/"+channel+"/Messages",this.options);
+  }
 
   setData(userData){
     this.data=userData;
+  }
+
+  allUsers():Observable<any>{
+    return this.http.get(this.url+this.SID+"/Users",this.options);
   }
 
   getData(){

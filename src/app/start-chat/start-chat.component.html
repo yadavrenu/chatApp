@@ -19,7 +19,7 @@
     <button (click)="viewChannelList()">View Channels</button>
     <div class="channelList">
       <ul *ngFor="let channel of channelList">
-        <li> #{{channel}} </li>
+        <li><a (click)="recieveMessage(channel)"> #{{channel}} </a></li>
       </ul>
     </div>
     <!-- <button (click)="delChannel()">Delete Channel</button> -->
@@ -28,6 +28,9 @@
   </div>
   <div class="right">
     <div class="msgs">
+      <ul *ngFor="let message of messageList">
+        <li>{{message.body}}:{{message.from}}</li>
+      </ul>
 
     </div>
     <div class="bottom">
