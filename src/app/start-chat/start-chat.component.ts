@@ -1,5 +1,6 @@
 import { UserDataTransferService } from '../user-data-transfer.service';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router'
 
 
 @Component({
@@ -17,20 +18,24 @@ export class StartChatComponent implements OnInit {
   messageBody:string;
   channelList:any=[];
   searchChannelName:string;
-  channelFound:string;
+  channelFound;
   searchList:any=[];
   bool:boolean;
   identity:string;
   messageList:Array<any>=[];
+  currentChannel;
+  showOrNot:boolean=false;
+  intervalId;
   
   
-  constructor( private data: UserDataTransferService) { }
+  constructor( private data: UserDataTransferService,private route:Router) { }
   
 
-  create(){
-    let sub=this.data.createChannel(this.channelName);
+  create(name){
+    let sub=this.data.createChannel(name);
     sub.subscribe(Data=>console.log(Data),err=>{console.log(err)});
     this.channelName="";
+    this.joinChannel(name);
                       
   }
 
@@ -73,6 +78,7 @@ export class StartChatComponent implements OnInit {
   // }
 
   Search(){
+
     let sub=this.data.viewChannels();
     sub.subscribe(Data=>{console.log(Data);
                 this.bool=false;
@@ -90,13 +96,13 @@ export class StartChatComponent implements OnInit {
                 }});
   }
 
-  joinChannel(){
-    let sub=this.data.addMember(this.identity,this.channelFound);
+  joinChannel(name){
+    let sub=this.data.addMember(this.identity,name);
     sub.subscribe(Data=>console.log(Data),err=>{console.log(err)});
   }
 
   sendMessage(){
-    let sub=this.data.sendMess(this.messageBody,this.myData.name);
+    let sub=this.data.sendMess(this.messageBody,this.myData.name,this.currentChannel);
     sub.subscribe(Data=>console.log(Data),err=>{console.log(err)});
     this.messageBody="";
   }
@@ -122,7 +128,16 @@ export class StartChatComponent implements OnInit {
     });
   }
 
+  // thisChannelEvents(channel){
+  // this.currentChannel=channel;
+
+
+  // }
+
   recieveMessage(channel){
+  this.currentChannel=channel;
+    this.showOrNot=true;
+    this.messageList.length=0;
     let sub=this.data.recMess(channel);
     var index=0;
     sub.subscribe(Data=>{
@@ -132,6 +147,20 @@ export class StartChatComponent implements OnInit {
       // this.messageList[index++].from=message.from;
       })
     },err=>{console.log(err)});
+
+
+  }
+
+  selfOrNot(message){
+    if(message.from==this.identity)
+    return true;
+    return false;
+
+  }
+
+  logOut(){
+    this.myData=null;
+    this.route.navigate(['']);
   }
 
   // delChannel(){
@@ -141,12 +170,20 @@ export class StartChatComponent implements OnInit {
 
   ngOnInit() {
     this.myData=this.data.getData();
+    // this.myData=JSON.parse(localStorage.getItem("userData"));
     console.log(this.myData.name,this.myData.id); 
     this.identity=this.myData.name; 
+    this.recieveMessage("general");
+    this.viewChannelList();
     if(!this.checkUser()){
       this.createUser();
     }
     
+  }
+
+  ngOnDestroy(){
+  
+    clearInterval(this.intervalId);
   }
 
 }

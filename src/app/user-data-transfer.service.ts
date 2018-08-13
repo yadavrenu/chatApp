@@ -44,8 +44,8 @@ export class UserDataTransferService {
     return this.http.get(this.url+this.SID+"/Users/"+userName+"/Channels",this.options)
   }
 
-  sendMess(message,name){
-    let CSID="CH73e740a984cb4b809b896c998be80b59";
+  sendMess(message,name,CSID){
+    
     let new_url=this.url+this.SID+"/Channels/"+CSID+"/Messages/";
     return this.http.post(new_url,"&Body="+message+"&From="+name,this.options);
   }

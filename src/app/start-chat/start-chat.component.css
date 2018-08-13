@@ -1,25 +1,92 @@
 .left{
-    width: 30%;
-    background-color:rgba(22, 54, 124, 0.356);
+    width: 25%;
+    background-color:whitesmoke;
+    /* border: gray 2px; */
     height: 670px;
-    position: absolute;
+    position: fixed;
+    padding: 20px 30px;
 }
-
-#msg{
+#myName{
+    background-color: rgba(221, 216, 216, 0.644);
+    border: none;
     border-radius: 5px;
-    width: 70%
+    text-align: center;
+    padding: 5px 8px;
+    width: 80%;
 }
 
-#Search #cName{
-    width: 200px;
+#Search, #cName{
+    width: 80%;
+    background-color: rgba(238, 235, 235, 0.644);
+    border: none;
+    border-radius: 5px;
+    /* text-align: center; */
+    padding: 5px 8px;
+    
+}
+
+#msgBox{
+    border-radius: 10px;
+    width: 85%;
+    padding: 12px 20px;
+    background-color: whitesmoke;
+}
+
+.msgs{
+    margin-top: 10px;
+    /* background-color: rgba(0, 0, 255, 0.11); */
+    height: 520px;
+    overflow-y: scroll;
+    /* text-align: center; */
+}
+.header{
+    height: 40px;
+    background-color: rgba(212, 207, 208, 0.664);
+    /* border-radius: 10px; */
+    /* text-align: center; */
+    padding-left: 30px;
+    padding-top: 10px;
+    border-radius: 10px;
+    
+}
+span{
+    margin-left: 15px;
+}
+
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
 }
 .right{
+    margin-left: 350px;
     width: 70%;
     float: right;
-    background-color:rgba(245, 245, 245, 0.39);
-    height: 670px;
-    /* position: absolute; */
+    /* background-color:rgba(245, 245, 245, 0.39); */
+    max-height: 630px;
+    /* overflow-y: scroll; */
+    /* overflow: hidden; */
+    position:fixed;
 
+}
+
+.container {
+    /* border: 2px solid #dedede; */
+    background-color: #4dace2c0;
+    width: 50%;
+    border-radius: 15px;
+    padding: 10px;
+    margin: 10px 0;
+    margin-left: 280px;
+    color: white;
+    text-align: right;
+}
+
+.darker {
+    /* border-color: #ccc; */
+    background-color: rgba(243, 240, 240, 0.712);
+    margin-left: 20px;
+    text-align: left;
+    color: black
 }
 
 ul{
@@ -33,14 +100,24 @@ ul{
     position: relative;
 }
  .bottom{
-    margin-top: 620px;
+    margin-top: 20px;
     margin-left:50px;
  }
 
  button{
      width: 120px;
      border-radius: 5px;
+     position: relative;
  }
  .channelList{
      height:200px;
+ }
+ li{
+     cursor: pointer;
+ }
+ #sendButton{
+     margin-left: 30px;
+ }
+ #searchIn{
+     margin-left: -28px;
  }

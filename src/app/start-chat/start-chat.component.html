@@ -1,22 +1,30 @@
+<head>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+
 <div class="main">
   <div class="left">
-    <input type="text" [(ngModel)]="searchChannelName" placeholder="Search.." id="Search">
+    <input type="text" [(ngModel)]="identity" id="myName" readonly><span (click)="logOut()" class="glyphicon glyphicon-log-out"></span><br /><br />
+    <input type="text" [(ngModel)]="searchChannelName" placeholder="Search for channels.." (keyup)="Search()" id="Search" required><span id="searchIn" class="glyphicon glyphicon-search"></span>
     <br />
-    <button (click)="Search()">Search</button>
+    <!-- <button (click)="Search()">Search</button> -->
     <br />
     <br />
     <div *ngIf="bool" class="searchResults">
       {{channelFound}}
-      <button (click)="joinChannel()" class="joinButton">+</button>
+      <button (click)="joinChannel(channelFound)" class="joinButton">+</button>
     </div>
     <br />
 
-    <input type="text" [(ngModel)]="channelName" id="cName" placeholder="New channel name">
+    <input type="text" [(ngModel)]="channelName" id="cName" placeholder="New channel name" required><span class="glyphicon glyphicon-plus-sign" (click)="create(channelName)"></span>
     <br />
-    <button (click)="create()">Create Channel</button>
+    <!-- <button (click)="create(channelName)">Create Channel</button> -->
     <br />
     <br />
-    <button (click)="viewChannelList()">View Channels</button>
+    <!-- <button (click)="viewChannelList()">View Channels</button> -->
     <div class="channelList">
       <ul *ngFor="let channel of channelList">
         <li><a (click)="recieveMessage(channel)"> #{{channel}} </a></li>
@@ -26,16 +34,20 @@
     <!-- <button (click)="joinChannel()">Join Channel</button> -->
 
   </div>
-  <div class="right">
-    <div class="msgs">
+  <div *ngIf="showOrNot" class="right">
+    <div class="header">
+      #{{currentChannel}}
+    </div>
+    <div class="msgs" id="messages">
       <ul *ngFor="let message of messageList">
-        <li>{{message.body}}:{{message.from}}</li>
+        <li *ngIf="selfOrNot(message); else other" class=" container">{{message.body}}</li>
+        <ng-template #other><li class=" container darker">{{message.body}}</li></ng-template>
       </ul>
 
     </div>
     <div class="bottom">
-      <input type="text" [(ngModel)]="messageBody" id="msg">
-      <button (click)="sendMessage()">send</button>
+      <input type="text" [(ngModel)]="messageBody" id="msgBox" placeholder="Enter your message..." (keydown.enter)="sendMessage()">
+      <!-- <button (click)="sendMessage()" id="sendButton">send</button> -->
     </div>
 
   </div>
