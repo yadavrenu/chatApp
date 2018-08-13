@@ -18,7 +18,7 @@ export class StartChatComponent implements OnInit {
   messageBody:string;
   channelList:any=[];
   searchChannelName:string;
-  channelFound;
+  channelFound:any=[];
   searchList:any=[];
   bool:boolean;
   identity:string;
@@ -32,10 +32,13 @@ export class StartChatComponent implements OnInit {
   
 
   create(name){
-    let sub=this.data.createChannel(name);
-    sub.subscribe(Data=>console.log(Data),err=>{console.log(err)});
-    this.channelName="";
-    this.joinChannel(name);
+    if(name){
+      let sub=this.data.createChannel(name);
+      sub.subscribe(Data=>console.log(Data),err=>{console.log(err)});
+      this.channelName="";
+      this.joinChannel(name);
+    }
+    
                       
   }
 
@@ -80,16 +83,23 @@ export class StartChatComponent implements OnInit {
   Search(){
 
     let sub=this.data.viewChannels();
+    this.channelFound.length=0;
+    var re = new RegExp(this.searchChannelName,'i');
+    if(this.searchChannelName==null)
+    this.channelFound.length=0;
     sub.subscribe(Data=>{console.log(Data);
                 this.bool=false;
                  for(let index=0;index<Data.channels.length;index++){
                    this.searchList.push(Data.channels[index].unique_name)
                  }
-                 for(let index=0;index<Data.channels.length;index++)
-                { if(this.searchList[index]==this.searchChannelName)
+                 for(let index=0,i=0;index<Data.channels.length;index++)
+                { 
+                  // if(this.searchList[index]==this.searchChannelName)
+                  if(re.test(this.searchList[index]))
                   {
-                    console.log("Channel Found");
-                    this.channelFound=this.searchChannelName;
+                    // console.log("Channel Found");
+                    this.channelFound[i++]=this.searchList[index];
+                    // this.channelFound=this.searchChannelName;
                     this.bool=true;
                   }
 
@@ -97,14 +107,19 @@ export class StartChatComponent implements OnInit {
   }
 
   joinChannel(name){
+
     let sub=this.data.addMember(this.identity,name);
     sub.subscribe(Data=>console.log(Data),err=>{console.log(err)});
   }
 
   sendMessage(){
-    let sub=this.data.sendMess(this.messageBody,this.myData.name,this.currentChannel);
-    sub.subscribe(Data=>console.log(Data),err=>{console.log(err)});
-    this.messageBody="";
+    if(this.messageBody){
+      let sub=this.data.sendMess(this.messageBody,this.myData.name,this.currentChannel);
+      sub.subscribe(Data=>console.log(Data),err=>{console.log(err)});
+      setTimeout(this.recieveMessage(this.currentChannel),5000);
+      this.messageBody="";
+    }
+    
   }
 
   createUser(){
@@ -151,6 +166,7 @@ export class StartChatComponent implements OnInit {
 
   }
 
+
   selfOrNot(message){
     if(message.from==this.identity)
     return true;
@@ -161,6 +177,7 @@ export class StartChatComponent implements OnInit {
   logOut(){
     this.myData=null;
     this.route.navigate(['']);
+    localStorage.clear();
   }
 
   // delChannel(){
@@ -169,12 +186,15 @@ export class StartChatComponent implements OnInit {
   // }
 
   ngOnInit() {
-    this.myData=this.data.getData();
-    // this.myData=JSON.parse(localStorage.getItem("userData"));
+    // this.myData=this.data.getData();
+    this.myData=JSON.parse(localStorage.getItem("userData"));
     console.log(this.myData.name,this.myData.id); 
     this.identity=this.myData.name; 
     this.recieveMessage("general");
     this.viewChannelList();
+    // this.intervalId=setInterval(()=>{
+    //   this.recieveMessage(this.currentChannel);
+    // },5000);
     if(!this.checkUser()){
       this.createUser();
     }

@@ -13,8 +13,8 @@
     <!-- <button (click)="Search()">Search</button> -->
     <br />
     <br />
-    <div *ngIf="bool" class="searchResults">
-      {{channelFound}}
+    <div *ngFor="let channel of channelFound" class="searchResults" id="searchresults">
+      {{channel}}
       <button (click)="joinChannel(channelFound)" class="joinButton">+</button>
     </div>
     <br />
@@ -38,10 +38,10 @@
     <div class="header">
       #{{currentChannel}}
     </div>
-    <div class="msgs" id="messages">
-      <ul *ngFor="let message of messageList">
+    <div class="msgs" style="overflow: scroll; height: xyz;" #scrollMe [scrollTop]="scrollMe.scrollHeight"    >
+      <ul *ngFor="let message of messageList" id="messages">
         <li *ngIf="selfOrNot(message); else other" class=" container">{{message.body}}</li>
-        <ng-template #other><li class=" container darker">{{message.body}}</li></ng-template>
+        <ng-template #other><li class=" container darker"><small>{{message.from}}<br /></small>{{message.body}}</li></ng-template>
       </ul>
 
     </div>

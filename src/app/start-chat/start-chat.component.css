@@ -17,7 +17,7 @@
 
 #Search, #cName{
     width: 80%;
-    background-color: rgba(238, 235, 235, 0.644);
+    background-color: rgba(221, 216, 216, 0.644);
     border: none;
     border-radius: 5px;
     /* text-align: center; */
@@ -51,6 +51,11 @@
 }
 span{
     margin-left: 15px;
+}
+
+small{
+    font-size: 10px;
+    color: gray;
 }
 
 ::-webkit-scrollbar {
@@ -95,6 +100,7 @@ ul{
 .joinButton{
     width:20px;
     margin-left: 30px;
+    padding: -5px -5px;
 }
 .main{
     position: relative;
@@ -120,4 +126,8 @@ ul{
  }
  #searchIn{
      margin-left: -28px;
+ }
+
+ .channelList{
+     font-size: 16px;
  }

@@ -26,8 +26,8 @@ public socialSignIn(socialPlatform: string) {
   this.socialAuthService.signIn(socialPlatformProvider).then(
     (userData) => {
       console.log(socialPlatform + " sign in data : ", userData);
-      this.data.setData(userData);
-      // localStorage.setItem("userData",JSON.stringify(userData));
+      // this.data.setData(userData);
+      localStorage.setItem("userData",JSON.stringify(userData));
       this.route.navigate(['/startChat']);
       // Now sign-in with userData
       // ...

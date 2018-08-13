@@ -63,16 +63,16 @@ export class UserDataTransferService {
     return this.http.get(this.url+this.SID+"/Channels/"+channel+"/Messages",this.options);
   }
 
-  setData(userData){
-    this.data=userData;
-  }
+  // setData(userData){
+  //   this.data=userData;
+  // }
 
   allUsers():Observable<any>{
     return this.http.get(this.url+this.SID+"/Users",this.options);
   }
 
-  getData(){
-    return this.data;
-  }
+  // getData(){
+  //   return this.data;
+  // }
 
 }
