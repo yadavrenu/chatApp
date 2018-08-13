@@ -27,6 +27,7 @@
     <br />
     <!-- <button (click)="viewChannelList()">View Channels</button> -->
     <div class="channelList">
+      <h4>Channels</h4>
       <ul *ngFor="let channel of channelList">
         <li><a (click)="recieveMessage(channel)"> #{{channel}} </a></li>
       </ul>

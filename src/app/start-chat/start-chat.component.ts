@@ -1,6 +1,8 @@
 import { UserDataTransferService } from '../user-data-transfer.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
+import { Observable } from 'rxjs';
+// import { setInterval } from 'timers';
 
 
 @Component({
@@ -34,7 +36,9 @@ export class StartChatComponent implements OnInit {
   create(name){
     if(name){
       let sub=this.data.createChannel(name);
-      sub.subscribe(Data=>console.log(Data),err=>{console.log(err)});
+      sub.subscribe(Data=>console.log(Data),err=>{
+        alert("A channel with this name already exist");
+        console.log(err)});
       this.channelName="";
       this.joinChannel(name);
     }
@@ -49,6 +53,7 @@ export class StartChatComponent implements OnInit {
   // }
 
   viewChannelList(){
+    this.channelList.push("general");
     let sub=this.data.viewChannels();//array of all existing channels within the service
     sub.subscribe(Data=>{
       console.log(Data);
@@ -58,10 +63,12 @@ export class StartChatComponent implements OnInit {
         channelData.subscribe(data=>{
           console.log(data);
           data.members.forEach(elem=>{
+            if(element.unique_name!="general"){
             if(elem.identity==this.identity){    //we only want the channels in which we are members
               this.channelList.push(element.unique_name);
               console.log("This is the list",this.channelList);
             }
+          }
           })
         })
         
@@ -85,8 +92,8 @@ export class StartChatComponent implements OnInit {
     let sub=this.data.viewChannels();
     this.channelFound.length=0;
     var re = new RegExp(this.searchChannelName,'i');
-    if(this.searchChannelName==null)
-    this.channelFound.length=0;
+    if(this.searchChannelName.length>=3){
+    // this.channelFound.length=0;
     sub.subscribe(Data=>{console.log(Data);
                 this.bool=false;
                  for(let index=0;index<Data.channels.length;index++){
@@ -104,6 +111,10 @@ export class StartChatComponent implements OnInit {
                   }
 
                 }});
+              }
+              else{
+                this.channelFound.length=0;
+              }
   }
 
   joinChannel(name){
@@ -116,7 +127,7 @@ export class StartChatComponent implements OnInit {
     if(this.messageBody){
       let sub=this.data.sendMess(this.messageBody,this.myData.name,this.currentChannel);
       sub.subscribe(Data=>console.log(Data),err=>{console.log(err)});
-      setTimeout(this.recieveMessage(this.currentChannel),5000);
+      // setTimeout(this.recieveMessage(this.currentChannel),5000);
       this.messageBody="";
     }
     
@@ -155,14 +166,36 @@ export class StartChatComponent implements OnInit {
     this.messageList.length=0;
     let sub=this.data.recMess(channel);
     var index=0;
+    var messageCount;
     sub.subscribe(Data=>{
       console.log(Data);
+      messageCount=Data.messageCount;
       Data.messages.forEach(message=>{
       this.messageList[index++]=message;
-      // this.messageList[index++].from=message.from;
       })
     },err=>{console.log(err)});
 
+    let newMessage=new Observable(message=>{
+      setInterval(()=>{
+        let msg=this.data.recMess(channel);
+        msg.subscribe(next=>{
+       
+          if(next.messageCount>messageCount){
+            let subMsg=this.data.recMess(channel);
+            subMsg.subscribe(data=>{
+              for(let i=messageCount;i<next.messageCount;i++)
+              {
+                this.messageList[index++]=data;
+              }
+            }
+            )
+            this.recieveMessage(channel);
+          }
+
+        })
+        
+      },5000)
+    })
 
   }
 

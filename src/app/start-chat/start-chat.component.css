@@ -101,6 +101,7 @@ ul{
     width:20px;
     margin-left: 30px;
     padding: -5px -5px;
+    border-radius: 50%; 
 }
 .main{
     position: relative;
@@ -139,4 +140,7 @@ ul{
 
  .channelList{
      font-size: 16px;
+ }
+ h4{
+     margin-left: 35px;
  }
