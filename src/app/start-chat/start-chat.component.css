@@ -75,7 +75,6 @@ small{
 }
 
 .container {
-    /* border: 2px solid #dedede; */
     background-color: #4dace2c0;
     width: 50%;
     border-radius: 15px;
@@ -87,7 +86,6 @@ small{
 }
 
 .darker {
-    /* border-color: #ccc; */
     background-color: rgba(243, 240, 240, 0.712);
     margin-left: 20px;
     text-align: left;
@@ -101,7 +99,8 @@ ul{
     width:20px;
     margin-left: 30px;
     padding: -5px -5px;
-    border-radius: 50%; 
+    border:none;
+    background-color: #4dace2c0;
 }
 .main{
     position: relative;
@@ -128,7 +127,7 @@ ul{
  .channelList{
      height:200px;
  }
- li{
+ #logOut, #join, li{
      cursor: pointer;
  }
  #sendButton{

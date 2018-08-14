@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
+// import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from '../../node_modules/rxjs'
 import { HttpHeaders } from '../../node_modules/@angular/common/http';
 import {HttpClient } from '@angular/common/http';
@@ -26,6 +26,14 @@ export class UserDataTransferService {
   createChannel(channelName):Observable<any>{
     return this.http.post(this.url+this.SID+"/Channels","FriendlyName=firstService&UniqueName="+channelName,this.options);
   }
+
+  getChannelDetails(name):Observable<any>{
+    return this.http.get(this.url+this.SID+"/Channels/"+name,this.options);
+  }
+
+  // getServiceDetails():Observable<any>{
+  //   return this.http.get()
+  // }
  
  viewChannels():Observable<any>{
    return this.http.get(this.url+this.SID+"/Channels",this.options);

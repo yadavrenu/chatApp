@@ -4,6 +4,7 @@ import { HttpModule } from '@angular/http'
 import { NgModule } from '@angular/core';
 import { AuthGuard } from './auth.guard'
 import { FormsModule } from '@angular/forms'
+import { LoadingModule } from 'ngx-loading';
 import {
   SocialLoginModule,
   AuthServiceConfig,
@@ -40,6 +41,7 @@ export function getAuthServiceConfigs() {
     SocialLoginModule,
     HttpModule,
     HttpClientModule,
+    LoadingModule,
     FormsModule,
     RouterModule.forRoot([
       {

@@ -13,6 +13,7 @@ import { Router } from '@angular/router'
 })
 export class LoginComponent implements OnInit {
 
+  public loading=false;
   constructor(private socialAuthService: AuthService,
     private data: UserDataTransferService,
     private route:Router

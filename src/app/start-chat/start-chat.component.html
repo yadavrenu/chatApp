@@ -8,7 +8,7 @@
 <div class="main">
   <div class="left">
     <img src="https://www.qualiscare.com/wp-content/uploads/2017/08/default-user.png">
-    <input type="text" [(ngModel)]="identity" id="myName" readonly><span (click)="logOut()" class="glyphicon glyphicon-log-out"></span><br /><br />
+    <input type="text" [(ngModel)]="identity" id="myName" readonly><span (click)="logOut()" class="glyphicon glyphicon-log-out" id="logOut"></span><br /><br />
     <input type="text" [(ngModel)]="searchChannelName" placeholder="Search for channels.." (keyup)="Search()" id="Search" required><span id="searchIn" class="glyphicon glyphicon-search"></span>
     <br />
     <!-- <button (click)="Search()">Search</button> -->
@@ -20,7 +20,7 @@
     </div>
     <br />
 
-    <input type="text" [(ngModel)]="channelName" id="cName" placeholder="New channel name" required><span class="glyphicon glyphicon-plus-sign" (click)="create(channelName)"></span>
+    <input type="text" [(ngModel)]="channelName" id="cName" placeholder="New channel name" required><span class="glyphicon glyphicon-plus-sign" id="join"(click)="create(channelName)"></span>
     <br />
     <!-- <button (click)="create(channelName)">Create Channel</button> -->
     <br />
